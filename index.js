@@ -13,7 +13,12 @@ app.use((req, res, next) => {
 // Apply CORS middleware to handle preflight checks and set headers
 app.use(
   cors({
-    origin: "http://localhost:3000", // Adjust this to match the domain of your frontend app
+    origin: [
+      "http://localhost:3000",
+      "https://app.wallycopilot.com",
+      "https://app.hellomedassist.com",
+      "https://app.hellovetassist.com",
+    ], // Adjust this to match the domain of your frontend app
     methods: ["GET", "POST", "OPTIONS"], // Specify methods allowed for CORS
     allowedHeaders: ["Content-Type", "Authorization"], // Specify headers allowed for CORS
   })
@@ -25,12 +30,12 @@ const proxyOptions = {
   changeOrigin: true, // Needed for virtual hosted sites
   pathRewrite: {
     "^/deepgram-transcribe":
-      "/v1/projects/1714679056570/functions/deepgram_transcription/invoke_nonblocking",
+      "/v1/projects/1714679056570/functions/deepgram_transcription/invoke_blocking",
   },
 };
 
-// Apply the proxy middleware for paths starting with /deepgram-transcribe
-app.use("/deepgram-transcribe", createProxyMiddleware(proxyOptions));
+// Apply the proxy middleware for POST requests to /deepgram-transcribe
+app.post("/deepgram-transcribe", createProxyMiddleware(proxyOptions));
 
 // Start the server
 const PORT = process.env.PORT || 8080;
