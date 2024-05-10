@@ -18,24 +18,38 @@ app.use(
       "https://app.wallycopilot.com",
       "https://app.hellomedassist.com",
       "https://app.hellovetassist.com",
-    ], // Adjust this to match the domain of your frontend app
-    methods: ["GET", "POST", "OPTIONS"], // Specify methods allowed for CORS
-    allowedHeaders: ["Content-Type", "Authorization"], // Specify headers allowed for CORS
+    ],
+    methods: ["GET", "POST", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
 
-// Proxy configuration
+// Proxy configuration for /deepgram-transcribe
 const proxyOptions = {
-  target: "https://api.runloop.ai", // Target host
-  changeOrigin: true, // Needed for virtual hosted sites
+  target: "https://api.runloop.ai",
+  changeOrigin: true,
   pathRewrite: {
     "^/deepgram-transcribe":
       "/v1/projects/1714679056570/functions/deepgram_transcription/invoke_blocking",
   },
 };
+generate_soap_note;
 
 // Apply the proxy middleware for POST requests to /deepgram-transcribe
 app.post("/deepgram-transcribe", createProxyMiddleware(proxyOptions));
+
+// New proxy configuration for the additional endpoint
+const soapProxyOptions = {
+  target: "https://another.api.target", // Replace with the target host for the new endpoint
+  changeOrigin: true,
+  pathRewrite: {
+    "^//soap-generation":
+      "/v1/projects/1714679056570/functions/generate_soap_note/invoke_blocking", // Replace with the actual path on the target server
+  },
+};
+
+// Apply the proxy middleware for POST requests to /another-endpoint
+app.post("/soap-generation", createProxyMiddleware(soapProxyOptions));
 
 // Start the server
 const PORT = process.env.PORT || 8080;
