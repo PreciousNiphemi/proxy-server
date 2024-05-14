@@ -43,8 +43,8 @@ const soapProxyOptions = {
   target: "https://another.api.target", // Replace with the target host for the new endpoint
   changeOrigin: true,
   pathRewrite: {
-    "^//soap-generation":
-      "/v1/projects/1714679056570/functions/generate_soap_note/invoke_blocking", // Replace with the actual path on the target server
+    "^/scheduler":
+      "/v1/projects/1714679056570/functions/transcription_scheduler/invoke_blocking", // Replace with the actual path on the target server
   },
 };
 
