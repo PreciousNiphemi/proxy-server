@@ -39,7 +39,7 @@ app.post("/deepgram-transcribe", createProxyMiddleware(proxyOptions));
 
 // New proxy configuration for the additional endpoint
 const soapProxyOptions = {
-  target: "https://another.api.target", // Replace with the target host for the new endpoint
+  target: "https://api.runloop.ai", // Replace with the target host for the new endpoint
   changeOrigin: true,
   pathRewrite: {
     "^/scheduler":
