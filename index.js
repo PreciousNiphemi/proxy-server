@@ -48,7 +48,7 @@ const soapProxyOptions = {
 };
 
 // Apply the proxy middleware for POST requests to /another-endpoint
-app.post("/soap-generation", createProxyMiddleware(soapProxyOptions));
+app.post("/scheduler", createProxyMiddleware(soapProxyOptions));
 
 // Start the server
 const PORT = process.env.PORT || 8080;
