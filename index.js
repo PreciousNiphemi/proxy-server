@@ -34,7 +34,7 @@ const proxyOptions = {
   changeOrigin: true,
   pathRewrite: {
     "^/deepgram-transcribe":
-      "/v1/projects/1714679056570/functions/deepgram_transcription/invoke_blocking",
+      "/v1/projects/1714679056570/functions/deepgram_transcription/invoke_nonblocking",
   },
 };
 
@@ -45,7 +45,7 @@ app.post("/generate_attio", (req, res) => {
   console.log("THE REQUEST IS", req.body);
   axios({
     method: "post",
-    url: `https://api.runloop.ai/v1/projects/1714679056570/functions/generate_attio/invoke_blocking`,
+    url: `https://api.runloop.ai/v1/projects/1714679056570/functions/generate_attio/invoke_nonblocking`,
     data: req.body,
     headers: {
       "Content-Type": req.headers["content-type"],
