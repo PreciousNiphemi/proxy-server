@@ -43,7 +43,7 @@ const soapProxyOptions = {
   changeOrigin: true,
   pathRewrite: {
     "^/scheduler":
-      "/v1/projects/1714679056570/functions/transcription_scheduler/invoke_blocking", // Replace with the actual path on the target server
+      "/v1/projects/1714679056570/functions/generate_code/invoke_blocking", // Replace with the actual path on the target server
   },
 };
 
