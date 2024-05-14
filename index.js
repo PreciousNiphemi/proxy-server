@@ -34,18 +34,8 @@ const proxyOptions = {
   changeOrigin: true,
   pathRewrite: {
     "^/deepgram-transcribe":
-      "/v1/projects/1714679056570/functions/deepgram_transcription/invoke_nonblocking",
+      "/v1/projects/1714679056570/functions/deepgram_transcription/invoke_blocking",
   },
-};
-
-const anotherProxyOption = {
-  target: "https://api.runloop.ai",
-  changeOrigin: true,
-  pathRewrite: {
-    "^/generate-attio":
-      "/v1/projects/1714679056570/functions/generate_attio/invoke_nonblocking",
-  },
-  proxyTimeout: 900000,
 };
 
 // Apply the proxy middleware for POST requests to /deepgram-transcribe
@@ -55,7 +45,7 @@ app.post("/generate_attio", (req, res) => {
   console.log("THE REQUEST IS", req.body);
   axios({
     method: "post",
-    url: `https://api.runloop.ai/v1/projects/1714679056570/functions/generate_attio/invoke_nonblocking`,
+    url: `https://api.runloop.ai/v1/projects/1714679056570/functions/generate_attio/invoke_blocking`,
     data: req.body,
     headers: {
       "Content-Type": req.headers["content-type"],
@@ -72,41 +62,6 @@ app.post("/generate_attio", (req, res) => {
       res.status(500).send("Error sending request");
     });
 });
-
-// app.post("/scheduler", (req, res) => {
-//   const data = JSON.stringify(req.body);
-
-//   const options = {
-//     hostname: "api.runloop.ai",
-//     path: "/v1/projects/1714679056570/functions/transcription_scheduler/invoke_nonblocking",
-//     method: "POST",
-//     rejectUnauthorized: false,
-//     headers: {
-//       "Content-Type": "application/json",
-//       "Content-Length": Buffer.byteLength(data),
-//       ...req.headers, // Forward all incoming headers
-//     },
-//   };
-
-//   // Create the request to the external server
-//   const proxyReq = https.request(options, (proxyRes) => {
-//     // Optionally log the status code for debugging
-//     console.log(`RESPONSE: ${proxyRes}`);
-
-//     console.log(`STATUS: ${proxyRes.statusCode}`);
-//   });
-
-//   proxyReq.on("error", (e) => {
-//     console.error(`Problem with request: ${e.message}`);
-//   });
-
-//   // Write data to request body and end the request
-//   proxyReq.write(data);
-//   proxyReq.end();
-
-//   // Immediately respond to the client without waiting for the external request to complete
-//   res.status(202).send("Request is being processed");
-// });
 
 // Start the server
 const PORT = process.env.PORT || 8080;
