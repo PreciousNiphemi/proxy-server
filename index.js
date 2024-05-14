@@ -33,7 +33,6 @@ const proxyOptions = {
       "/v1/projects/1714679056570/functions/deepgram_transcription/invoke_blocking",
   },
 };
-generate_soap_note;
 
 // Apply the proxy middleware for POST requests to /deepgram-transcribe
 app.post("/deepgram-transcribe", createProxyMiddleware(proxyOptions));
