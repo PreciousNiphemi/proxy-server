@@ -63,6 +63,27 @@ app.post("/generate_attio", (req, res) => {
     });
 });
 
+app.post("/post_attio", async (req, res) => {
+  console.log("THE REQUEST IS", req.body);
+  try {
+    const response = await axios({
+      method: "post",
+      url: `https://api.runloop.ai/v1/projects/1714679056570/functions/post_attio_json/invoke_blocking`,
+      data: req.body,
+      headers: {
+        "Content-Type": req.headers["content-type"],
+        Authorization: req.headers["authorization"],
+        // include other necessary headers here
+      },
+    });
+    console.log("response", response.data);
+    res.status(200).json(response.data); // send the response data back to the client
+  } catch (error) {
+    console.log("THE ERROR IS", error);
+    res.status(500).send("Error sending request");
+  }
+});
+
 // Start the server
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
