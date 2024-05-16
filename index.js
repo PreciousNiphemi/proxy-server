@@ -20,6 +20,7 @@ app.use(
       "https://app.hellomedassist.com",
       "https://app.hellovetassist.com",
       "https://generalpartnershipai.com",
+      "app.generalpartnership.com",
     ],
     methods: ["GET", "POST", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
