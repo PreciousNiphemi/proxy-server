@@ -43,6 +43,49 @@ const proxyOptions = {
 // Apply the proxy middleware for POST requests to /deepgram-transcribe
 app.post("/deepgram-transcribe", createProxyMiddleware(proxyOptions));
 
+app.post("/generate_soap", (req, res) => {
+  console.log("THE REQUEST IS", req.body);
+  axios({
+    method: "post",
+    url: `https://api.runloop.ai/v1/projects/1714679056570/functions/transcription_scheduler/invoke_nonblocking`,
+    data: req.body,
+    headers: {
+      "Content-Type": req.headers["content-type"],
+      Authorization: req.headers["authorization"],
+      // include other necessary headers here
+    },
+  })
+    .then((response) => {
+      console.log("response", "response", response.data);
+      res.status(200).send("Request sent");
+    })
+    .catch((error) => {
+      console.log("THE ERROR IS", error);
+      res.status(500).send("Error sending request");
+    });
+});
+
+app.post("/generate_template_note", async (req, res) => {
+  console.log("THE REQUEST IS", req.body);
+  try {
+    const response = await axios({
+      method: "post",
+      url: `https://api.runloop.ai/v1/projects/1714679056570/functions/generate_soap_note/invoke_blocking`,
+      data: req.body,
+      headers: {
+        "Content-Type": req.headers["content-type"],
+        Authorization: req.headers["authorization"],
+        // include other necessary headers here
+      },
+    });
+    console.log("response", response.data);
+    res.status(200).json(response.data); // send the response data back to the client
+  } catch (error) {
+    console.log("THE ERROR IS", error);
+    res.status(500).send("Error sending request");
+  }
+});
+
 app.post("/generate_attio", (req, res) => {
   console.log("THE REQUEST IS", req.body);
   axios({
