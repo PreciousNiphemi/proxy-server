@@ -47,7 +47,7 @@ app.post("/generate_soap", (req, res) => {
   console.log("THE REQUEST IS", req.body);
   axios({
     method: "post",
-    url: `https://api.runloop.ai/v1/projects/1714679056570/functions/transcription_scheduler/invoke_nonblocking`,
+    url: `https://api.runloop.ai/v1/projects/1714679056570/functions/generate_soap_note/invoke_nonblocking`,
     data: req.body,
     headers: {
       "Content-Type": req.headers["content-type"],
