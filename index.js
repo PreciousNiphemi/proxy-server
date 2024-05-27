@@ -129,6 +129,94 @@ app.post("/post_attio", async (req, res) => {
   }
 });
 
+app.post("/medassist-us-transcribe", (req, res) => {
+  console.log("THE REQUEST IS", req.body);
+  axios({
+    method: "post",
+    url: `https://faas-nyc1-2ef2e6cc.doserverless.co/api/v1/web/fn-971db314-20dc-4740-9b94-906c0f27c4c3/notes/transcribe`,
+    data: req.body,
+    headers: {
+      "Content-Type": req.headers["content-type"],
+      Authorization: req.headers["authorization"],
+      // include other necessary headers here
+    },
+  })
+    .then((response) => {
+      console.log("response", "response", response.data);
+      res.status(200).send("Request sent");
+    })
+    .catch((error) => {
+      console.log("THE ERROR IS", error);
+      res.status(500).send("Error sending request");
+    });
+});
+
+app.post("/medassist-france-transcribe", (req, res) => {
+  console.log("THE REQUEST IS", req.body);
+  axios({
+    method: "post",
+    url: `https://faas-fra1-afec6ce7.doserverless.co/api/v1/web/fn-b5f65e1c-10bd-45d5-953b-053dad7d8ee8/notes/transcribe`,
+    data: req.body,
+    headers: {
+      "Content-Type": req.headers["content-type"],
+      Authorization: req.headers["authorization"],
+      // include other necessary headers here
+    },
+  })
+    .then((response) => {
+      console.log("response", "response", response.data);
+      res.status(200).send("Request sent");
+    })
+    .catch((error) => {
+      console.log("THE ERROR IS", error);
+      res.status(500).send("Error sending request");
+    });
+});
+
+app.post("/medassist-testing-transcribe", (req, res) => {
+  console.log("THE REQUEST IS", req.body);
+  axios({
+    method: "post",
+    url: `https://faas-nyc1-2ef2e6cc.doserverless.co/api/v1/web/fn-c43fccea-9548-427c-aa2d-0bc6e9a3ed9f/notes/transcribe`,
+    data: req.body,
+    headers: {
+      "Content-Type": req.headers["content-type"],
+      Authorization: req.headers["authorization"],
+      // include other necessary headers here
+    },
+  })
+    .then((response) => {
+      console.log("response", "response", response.data);
+      res.status(200).send("Request sent");
+    })
+    .catch((error) => {
+      console.log("THE ERROR IS", error);
+      res.status(500).send("Error sending request");
+    });
+});
+
+app.post("/medassist-us-regenerate", (req, res) => {
+  console.log("THE REQUEST IS", req.body);
+  axios({
+    method: "post",
+    url: `https://faas-nyc1-2ef2e6cc.doserverless.co/api/v1/web/fn-971db314-20dc-4740-9b94-906c0f27c4c3/notes/regenerate`,
+    data: req.body,
+    headers: {
+      "Content-Type": req.headers["content-type"],
+      Authorization: req.headers["authorization"],
+      // include other necessary headers here
+    },
+  })
+    .then((response) => {
+      console.log("response", "response", response.data);
+      res.status(200).send("Request sent");
+    })
+    .catch((error) => {
+      console.log("THE ERROR IS", error);
+      res.status(500).send("Error sending request");
+    });
+});
+
 // Start the server
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
